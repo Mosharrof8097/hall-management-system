@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hall_management/core/app_button/login_page_animated_btn.dart';
+import 'package:hall_management/core/routes/app_routes.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
@@ -26,10 +28,7 @@ class HeroSection extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            'assets/images/rolebase/hall_ph.png',
-            fit: BoxFit.cover,
-          ),
+          Image.asset('assets/images/rolebase/hall_ph.png', fit: BoxFit.cover),
 
           /// Gradient Overlay
           Container(
@@ -56,32 +55,29 @@ class HeroSection extends StatelessWidget {
                     ? CrossAxisAlignment.center
                     : CrossAxisAlignment.start,
                 children: [
-          
                   Text(
                     "ময়মনসিংহ ইঞ্জিনিয়ারিং কলেজ",
-                    textAlign:
-                        isMobile ? TextAlign.center : TextAlign.left,
+                    textAlign: isMobile ? TextAlign.center : TextAlign.left,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: isMobile ? 22 : 36,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-          
+
                   const SizedBox(height: 8),
-          
+
                   Text(
                     "অমর একুশে হল ম্যানেজমেন্ট সিস্টেম",
-                    textAlign:
-                        isMobile ? TextAlign.center : TextAlign.left,
+                    textAlign: isMobile ? TextAlign.center : TextAlign.left,
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: isMobile ? 16 : 22,
                     ),
                   ),
-          
+
                   const SizedBox(height: 30),
-          
+
                   Wrap(
                     alignment: isMobile
                         ? WrapAlignment.center
@@ -89,27 +85,25 @@ class HeroSection extends StatelessWidget {
                     spacing: 20,
                     runSpacing: 15,
                     children: [
-          
                       AnimatedRoleButton(
                         title: "Login",
                         width: 180,
                         height: 45,
                         backgroundColor: Colors.green.shade900,
                         textColor: Colors.white,
-                        border: Border.all(
-                          color: Colors.green.shade900,
-                        ),
+                        border: Border.all(color: Colors.green.shade900),
+                        onTap: () {
+                          context.go(AppRoutes.login);
+                        },
                       ),
-          
+
                       AnimatedRoleButton(
                         title: "Apply For Seat",
                         width: 220,
                         height: 45,
                         backgroundColor: Colors.white,
                         textColor: Colors.green.shade900,
-                        border: Border.all(
-                          color: Colors.green.shade900,
-                        ),
+                        border: Border.all(color: Colors.green.shade900),
                       ),
                     ],
                   ),
