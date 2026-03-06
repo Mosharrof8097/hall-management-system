@@ -138,6 +138,7 @@ class _AdminLayoutState extends State<AdminLayout> {
                 _buildNavItem(context, icon: Icons.campaign,        title: 'Notices',      route: AppRoutes.adminNotices,   isActive: currentRoute.startsWith(AppRoutes.adminNotices)),
                 _buildNavItem(context, icon: Icons.event_seat,      title: 'Applications', route: AppRoutes.adminVacancy,   isActive: currentRoute.startsWith(AppRoutes.adminVacancy)),
                 _buildNavItem(context, icon: Icons.bar_chart,       title: 'Reports',      route: AppRoutes.adminReports,   isActive: currentRoute.startsWith(AppRoutes.adminReports)),
+                _buildNavItem(context, icon: Icons.feedback,        title: 'Complaints',   route: AppRoutes.adminComplaints,isActive: currentRoute.startsWith(AppRoutes.adminComplaints)),
                 _buildNavItem(context, icon: Icons.settings,        title: 'Settings',     route: AppRoutes.adminSettings,  isActive: currentRoute.startsWith(AppRoutes.adminSettings)),
               ],
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hall_management/views/admin/billing/admin_billing_page.dart';
+import 'package:hall_management/views/admin/complaints/admin_complaints_page.dart';
 import 'package:hall_management/views/admin/dashboard/admin_dashboard_page.dart';
 import 'package:hall_management/views/admin/layout/admin_layout.dart';
 import 'package:hall_management/views/admin/managers/admin_managers_page.dart';
@@ -12,11 +13,17 @@ import 'package:hall_management/views/admin/vacancy/admin_vacancy_page.dart';
 import 'package:hall_management/views/login/login_page.dart';
 import 'package:hall_management/views/login/role_based_login_page.dart';
 import 'package:hall_management/views/manager/bazar/manager_bazar_page.dart';
+import 'package:hall_management/views/manager/complaints/manager_complaints_page.dart';
 import 'package:hall_management/views/manager/dashboard/manager_dashboard_page.dart';
 import 'package:hall_management/views/manager/dues/manager_dues_page.dart';
 import 'package:hall_management/views/manager/layout/manager_layout.dart';
 import 'package:hall_management/views/manager/meal/manager_account_page.dart';
 import 'package:hall_management/views/manager/meal/manager_meal_page.dart';
+import 'package:hall_management/views/student/complaints/student_complaint_page.dart';
+import 'package:hall_management/views/student/dashboard/student_dashboard_page.dart';
+import 'package:hall_management/views/student/dues/student_dues_page.dart';
+import 'package:hall_management/views/student/layout/student_layout.dart';
+import 'package:hall_management/views/student/meal/student_meal_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app_routes.dart';
@@ -25,6 +32,7 @@ class AppRouter {
   static final _rootNavigatorKey    = GlobalKey<NavigatorState>();
   static final _adminNavigatorKey   = GlobalKey<NavigatorState>();
   static final _managerNavigatorKey = GlobalKey<NavigatorState>();
+  static final _studentNavigatorKey = GlobalKey<NavigatorState>();
 
   static final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
@@ -45,15 +53,16 @@ class AppRouter {
         navigatorKey: _adminNavigatorKey,
         builder: (context, state, child) => AdminLayout(child: child),
         routes: [
-          GoRoute(path: AppRoutes.adminDashboard, builder: (c, s) => const AdminDashboardPage()),
-          GoRoute(path: AppRoutes.adminStudents,  builder: (c, s) => const AdminStudentsPage()),
-          GoRoute(path: AppRoutes.adminManagers,  builder: (c, s) => const AdminManagersPage()),
-          GoRoute(path: AppRoutes.adminRooms,     builder: (c, s) => const AdminRoomsPage()),
-          GoRoute(path: AppRoutes.adminBilling,   builder: (c, s) => const AdminBillingPage()),
-          GoRoute(path: AppRoutes.adminNotices,   builder: (c, s) => const AdminNoticesPage()),
-          GoRoute(path: AppRoutes.adminVacancy,   builder: (c, s) => const AdminVacancyPage()),
-          GoRoute(path: AppRoutes.adminReports,   builder: (c, s) => const AdminReportsPage()),
-          GoRoute(path: AppRoutes.adminSettings,  builder: (c, s) => const Center(child: Text('Settings — Coming Soon'))),
+          GoRoute(path: AppRoutes.adminDashboard,  builder: (c, s) => const AdminDashboardPage()),
+          GoRoute(path: AppRoutes.adminStudents,   builder: (c, s) => const AdminStudentsPage()),
+          GoRoute(path: AppRoutes.adminManagers,   builder: (c, s) => const AdminManagersPage()),
+          GoRoute(path: AppRoutes.adminRooms,      builder: (c, s) => const AdminRoomsPage()),
+          GoRoute(path: AppRoutes.adminBilling,    builder: (c, s) => const AdminBillingPage()),
+          GoRoute(path: AppRoutes.adminNotices,    builder: (c, s) => const AdminNoticesPage()),
+          GoRoute(path: AppRoutes.adminVacancy,    builder: (c, s) => const AdminVacancyPage()),
+          GoRoute(path: AppRoutes.adminReports,    builder: (c, s) => const AdminReportsPage()),
+          GoRoute(path: AppRoutes.adminComplaints, builder: (c, s) => const AdminComplaintsPage()),
+          GoRoute(path: AppRoutes.adminSettings,   builder: (c, s) => const Center(child: Text('Settings — Coming Soon'))),
         ],
       ),
 
@@ -62,16 +71,30 @@ class AppRouter {
         navigatorKey: _managerNavigatorKey,
         builder: (context, state, child) => ManagerLayout(child: child),
         routes: [
-          GoRoute(path: AppRoutes.managerDashboard, builder: (c, s) => const ManagerDashboardPage()),
-          GoRoute(path: AppRoutes.managerMeal,      builder: (c, s) => const ManagerMealPage()),
-          GoRoute(path: AppRoutes.managerBazar,     builder: (c, s) => const ManagerBazarPage()),
-          GoRoute(path: AppRoutes.managerAccount,   builder: (c, s) => const ManagerAccountPage()),
-          GoRoute(path: AppRoutes.managerDues,      builder: (c, s) => const ManagerDuesPage()),
-          GoRoute(path: AppRoutes.managerNotices,   builder: (c, s) => const Center(child: Text('Manager Notices — Coming Soon'))),
+          GoRoute(path: AppRoutes.managerDashboard,  builder: (c, s) => const ManagerDashboardPage()),
+          GoRoute(path: AppRoutes.managerMeal,       builder: (c, s) => const ManagerMealPage()),
+          GoRoute(path: AppRoutes.managerBazar,      builder: (c, s) => const ManagerBazarPage()),
+          GoRoute(path: AppRoutes.managerAccount,    builder: (c, s) => const ManagerAccountPage()),
+          GoRoute(path: AppRoutes.managerDues,       builder: (c, s) => const ManagerDuesPage()),
+          GoRoute(path: AppRoutes.managerComplaints, builder: (c, s) => const ManagerComplaintsPage()),
+          GoRoute(path: AppRoutes.managerNotices,    builder: (c, s) => const Center(child: Text('Notices — Coming Soon'))),
         ],
       ),
 
-      GoRoute(path: AppRoutes.studentDashboard, builder: (c, s) => const Scaffold(body: Center(child: Text('Student Dashboard — Coming Soon')))),
+      // ─── Student Shell ─────────────────────────────────────────────────
+      ShellRoute(
+        navigatorKey: _studentNavigatorKey,
+        builder: (context, state, child) => StudentLayout(child: child),
+        routes: [
+          GoRoute(path: AppRoutes.studentDashboard,  builder: (c, s) => const StudentDashboardPage()),
+          GoRoute(path: AppRoutes.studentMeal,       builder: (c, s) => const StudentMealPage()),
+          GoRoute(path: AppRoutes.studentDues,       builder: (c, s) => const StudentDuesPage()),
+          GoRoute(path: AppRoutes.studentComplaints, builder: (c, s) => const StudentComplaintPage()),
+          GoRoute(path: AppRoutes.studentNotices,    builder: (c, s) => const Center(child: Text('Notices — Coming Soon'))),
+        ],
+      ),
     ],
   );
-}
+}
+
+
