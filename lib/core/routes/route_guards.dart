@@ -11,13 +11,20 @@ import 'package:hall_management/views/admin/students/admin_students_page.dart';
 import 'package:hall_management/views/admin/vacancy/admin_vacancy_page.dart';
 import 'package:hall_management/views/login/login_page.dart';
 import 'package:hall_management/views/login/role_based_login_page.dart';
+import 'package:hall_management/views/manager/bazar/manager_bazar_page.dart';
+import 'package:hall_management/views/manager/dashboard/manager_dashboard_page.dart';
+import 'package:hall_management/views/manager/dues/manager_dues_page.dart';
+import 'package:hall_management/views/manager/layout/manager_layout.dart';
+import 'package:hall_management/views/manager/meal/manager_account_page.dart';
+import 'package:hall_management/views/manager/meal/manager_meal_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app_routes.dart';
 
 class AppRouter {
-  static final _rootNavigatorKey = GlobalKey<NavigatorState>();
-  static final _adminNavigatorKey = GlobalKey<NavigatorState>();
+  static final _rootNavigatorKey    = GlobalKey<NavigatorState>();
+  static final _adminNavigatorKey   = GlobalKey<NavigatorState>();
+  static final _managerNavigatorKey = GlobalKey<NavigatorState>();
 
   static final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
@@ -50,7 +57,20 @@ class AppRouter {
         ],
       ),
 
-      GoRoute(path: AppRoutes.managerDashboard, builder: (c, s) => const Scaffold(body: Center(child: Text('Manager Dashboard — Coming Soon')))),
+      // ─── Manager Shell ─────────────────────────────────────────────────
+      ShellRoute(
+        navigatorKey: _managerNavigatorKey,
+        builder: (context, state, child) => ManagerLayout(child: child),
+        routes: [
+          GoRoute(path: AppRoutes.managerDashboard, builder: (c, s) => const ManagerDashboardPage()),
+          GoRoute(path: AppRoutes.managerMeal,      builder: (c, s) => const ManagerMealPage()),
+          GoRoute(path: AppRoutes.managerBazar,     builder: (c, s) => const ManagerBazarPage()),
+          GoRoute(path: AppRoutes.managerAccount,   builder: (c, s) => const ManagerAccountPage()),
+          GoRoute(path: AppRoutes.managerDues,      builder: (c, s) => const ManagerDuesPage()),
+          GoRoute(path: AppRoutes.managerNotices,   builder: (c, s) => const Center(child: Text('Manager Notices — Coming Soon'))),
+        ],
+      ),
+
       GoRoute(path: AppRoutes.studentDashboard, builder: (c, s) => const Scaffold(body: Center(child: Text('Student Dashboard — Coming Soon')))),
     ],
   );

@@ -20,8 +20,11 @@ class AppRoutes {
 
   // Manager
   static const managerDashboard = '/manager/dashboard';
-  static const managerMenu = '/manager/menu';
-  static const managerReports = '/manager/reports';
+  static const managerMeal      = '/manager/meal';
+  static const managerBazar     = '/manager/bazar';
+  static const managerAccount   = '/manager/account';
+  static const managerDues      = '/manager/dues';
+  static const managerNotices   = '/manager/notices';
 
   // Student
   static const studentDashboard = '/student/dashboard';
