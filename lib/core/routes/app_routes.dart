@@ -9,11 +9,14 @@ class AppRoutes {
 
   // Admin
   static const adminDashboard = '/admin/dashboard';
-  static const adminStudents = '/admin/students';
-  static const adminRooms = '/admin/rooms';
-  static const adminNotices = '/admin/notices';
-  static const adminReports = '/admin/reports';
-  static const adminSettings = '/admin/settings';
+  static const adminStudents  = '/admin/students';
+  static const adminManagers  = '/admin/managers';
+  static const adminRooms     = '/admin/rooms';
+  static const adminBilling   = '/admin/billing';
+  static const adminNotices   = '/admin/notices';
+  static const adminVacancy   = '/admin/vacancy';
+  static const adminReports   = '/admin/reports';
+  static const adminSettings  = '/admin/settings';
 
   // Manager
   static const managerDashboard = '/manager/dashboard';

@@ -126,48 +126,22 @@ class _AdminLayoutState extends State<AdminLayout> {
                 : const Icon(Icons.shield, color: Colors.white),
           ),
         const Divider(color: Colors.white24),
-        Expanded(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              _buildNavItem(
-                context,
-                icon: Icons.dashboard,
-                title: 'Dashboard',
-                route: AppRoutes.adminDashboard,
-                isActive: currentRoute == AppRoutes.adminDashboard,
-              ),
-              _buildNavItem(
-                context,
-                icon: Icons.people,
-                title: 'Students',
-                route: AppRoutes.adminStudents,
-                isActive: currentRoute.startsWith(AppRoutes.adminStudents),
-              ),
-              _buildNavItem(
-                context,
-                icon: Icons.manage_accounts,
-                title: 'Managers',
-                route: '/admin/managers', // Need to add to routes
-                isActive: currentRoute.startsWith('/admin/managers'),
-              ),
-              _buildNavItem(
-                context,
-                icon: Icons.room,
-                title: 'Rooms',
-                route: AppRoutes.adminRooms,
-                isActive: currentRoute.startsWith(AppRoutes.adminRooms),
-              ),
-              _buildNavItem(
-                context,
-                icon: Icons.settings,
-                title: 'Settings',
-                route: AppRoutes.adminSettings,
-                isActive: currentRoute.startsWith(AppRoutes.adminSettings),
-              ),
-            ],
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                _buildNavItem(context, icon: Icons.dashboard,       title: 'Dashboard',    route: AppRoutes.adminDashboard, isActive: currentRoute == AppRoutes.adminDashboard),
+                _buildNavItem(context, icon: Icons.people,          title: 'Students',     route: AppRoutes.adminStudents,  isActive: currentRoute.startsWith(AppRoutes.adminStudents)),
+                _buildNavItem(context, icon: Icons.manage_accounts, title: 'Managers',     route: AppRoutes.adminManagers,  isActive: currentRoute.startsWith(AppRoutes.adminManagers)),
+                _buildNavItem(context, icon: Icons.meeting_room,    title: 'Rooms',        route: AppRoutes.adminRooms,     isActive: currentRoute.startsWith(AppRoutes.adminRooms)),
+                _buildNavItem(context, icon: Icons.receipt_long,    title: 'Billing',      route: AppRoutes.adminBilling,   isActive: currentRoute.startsWith(AppRoutes.adminBilling)),
+                _buildNavItem(context, icon: Icons.campaign,        title: 'Notices',      route: AppRoutes.adminNotices,   isActive: currentRoute.startsWith(AppRoutes.adminNotices)),
+                _buildNavItem(context, icon: Icons.event_seat,      title: 'Applications', route: AppRoutes.adminVacancy,   isActive: currentRoute.startsWith(AppRoutes.adminVacancy)),
+                _buildNavItem(context, icon: Icons.bar_chart,       title: 'Reports',      route: AppRoutes.adminReports,   isActive: currentRoute.startsWith(AppRoutes.adminReports)),
+                _buildNavItem(context, icon: Icons.settings,        title: 'Settings',     route: AppRoutes.adminSettings,  isActive: currentRoute.startsWith(AppRoutes.adminSettings)),
+              ],
+            ),
           ),
-        ),
         const Divider(color: Colors.white24),
         _buildNavItem(
           context,
