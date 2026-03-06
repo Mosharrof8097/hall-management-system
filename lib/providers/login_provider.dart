@@ -1,42 +1,44 @@
-// lib/core/controllers/login_controller.dart
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/routes/app_routes.dart';
+import '../../core/services/auth_repository.dart';
+import 'auth_provider.dart';
+import 'package:provider/provider.dart';
 
-import '../../../core/routes/app_routes.dart';
-import '../../../core/services/auth_repository.dart';
-import 'auth_controller.dart';
-
-class LoginController extends GetxController {
-  final AuthRepository _repo         = AuthRepository();
-  final AuthController _authController = Get.find();
+class LoginProvider extends ChangeNotifier {
+  final AuthRepository _repo = AuthRepository();
 
   final formKey = GlobalKey<FormState>();
 
   final emailCtrl = TextEditingController();
-  final passCtrl  = TextEditingController();
+  final passCtrl = TextEditingController();
 
-  final isLoading = false.obs;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  void _setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
 
   Future<void> login(BuildContext context) async {
     if (!formKey.currentState!.validate()) return;
 
     try {
-      isLoading.value = true;
+      _setLoading(true);
 
       final user = await _repo.login(
         email: emailCtrl.text.trim(),
         password: passCtrl.text.trim(),
       );
 
-      _authController.setUser(user);
-
       if (!context.mounted) return;
+      
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      authProvider.setUser(user);
 
-      // ✅ FIX 1: roleSelection না গিয়ে role অনুযায়ী সরাসরি dashboard এ যাও
       final role = user.role;
-      debugPrint('Login success. Role: $role'); // console এ দেখো
+      debugPrint('Login success. Role: $role');
 
       switch (role) {
         case 'admin':
@@ -53,13 +55,10 @@ class LoginController extends GetxController {
 
     } catch (e) {
       final raw = e.toString();
-      debugPrint('Login error raw: $raw'); // ✅ console এ exact error দেখো
+      debugPrint('Login error raw: $raw');
 
       final msg = _getErrorMessage(raw);
 
-      // ✅ FIX 2: GoRouter + GetX context conflict fix
-      // Get.snackbar GoRouter context এ কাজ করে না
-      // ScaffoldMessenger সবচেয়ে reliable
       if (context.mounted) {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
@@ -97,7 +96,7 @@ class LoginController extends GetxController {
         );
       }
     } finally {
-      isLoading.value = false;
+      _setLoading(false);
     }
   }
 
@@ -124,14 +123,13 @@ class LoginController extends GetxController {
       return 'অনেকবার চেষ্টা হয়েছে — কিছুক্ষণ পরে আবার করুন';
     }
 
-    // ✅ fallback — exact error দেখাও যাতে debug হয়
     return 'এরর: $raw';
   }
 
   @override
-  void onClose() {
+  void dispose() {
     emailCtrl.dispose();
     passCtrl.dispose();
-    super.onClose();
+    super.dispose();
   }
 }

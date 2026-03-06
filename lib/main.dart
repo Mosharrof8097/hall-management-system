@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
-import 'package:hall_management/controllers/auth_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:hall_management/providers/auth_provider.dart';
 import 'package:hall_management/core/constants/app_theme.dart';
 import 'package:hall_management/core/routes/route_guards.dart';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -16,9 +15,14 @@ Future<void> main() async {
     anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
 
-  Get.put(AuthController(), permanent: true);
-
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      routerConfig: AppRouter.router,   // ✅ FIXED
+      routerConfig: AppRouter.router,
     );
   }
-}
+}
